@@ -63,6 +63,59 @@ dbDisconnect(hg19)
 #https://www.pantz.org/software/mysql/mysqlcommands.html
 
 
+######################################################################################################
+#####################################################################################################
+## HDF5
+
+#INSTALLING PACKAGE
+source("http://bioconductor.org/biocLite.R")
+biocLite('rhdf5')
+
+#LOADING 
+library(rhdf5)
+
+#Criando um arquivo
+created = h5createFile("example.h5")
+
+#Criando grupos dentro de um arquivo específico
+
+created = h5createGroup("example.h5", "foo")
+created = h5createGroup("example.h5", "baa")
+created = h5createGroup("example.h5", "foo/foobaa") # é um subgrupo de foo
+
+h5ls("example.h5") # para ver o conteúdo do arquivo, isto é, os grupos.
+
+#ESCREVER EM GRUPOS
+
+#definindo uma matrix
+A = matrix(1:10, nr = 5 , nc = 2)
+
+h5write(A,"example.h5", "foo/A")  # escreve o valor "A", no arquivo "example.h5" no destino "foo/A" 
+
+
+B = array(seq(0.1,2.0,by = 0.1), dim = c(5,2,2))
+h5write(B, "example.h5" , "foo/foobaa/B")
+#exemplo análogo ao anterior.
+
+#ESCREVER UM DATA SET
+
+df = data.frame(1L:5L, seq(0,1,length.out = 5), c("ab", "cde" , "fghi" , "a" , "s"), stringAsFactors = FALSE)
+#criando o data frame
+
+h5write(df , "example.h5" , "df")
+#escrevendo no arquivo, nao está em nenhum grupo
+
+#LENDO OS DADOS
+readA <- h5read("example.h5" , "foo/A")
+readB <- h5read("example.h5" , "foo/foobaa/B")
+readdf <- h5read("example.h5", "df")
+
+h5write(c(12,13,14), "example.h5" , "foo/A" , index = list(1:3,1))
+#isso modifica o valor "A" do grupo "foo" nos indices indicados
+
+#notes = bioconductor.org/packages/release/bioc/vignettes/rhdf5/int/doc/rhdf5.pdf
+
+
 
 
 
