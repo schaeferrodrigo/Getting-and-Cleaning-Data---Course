@@ -115,6 +115,58 @@ h5write(c(12,13,14), "example.h5" , "foo/A" , index = list(1:3,1))
 
 #notes = bioconductor.org/packages/release/bioc/vignettes/rhdf5/int/doc/rhdf5.pdf
 
+###############################################################################################
+# WEB SCRAPING
+
+con <- url("http://scholar.google.com/citations?user=HI-I6C0AAAAJ&hl=en ")
+#criar uma conexao com a página
+
+htmlCode = readLines( con )
+#ler o código html
+
+close( con )
+#fechar a conexao , sempre importante fazer isso
+
+# em htmlCode temos o código HTML,mas muito dificil de ler
+## =======================
+# PARSING WITH XML (Análisar sintáticamente com XML)
+
+library(XML)
+# abrir a bibliote
+
+url <- "http://scholar.google.com/citations?user=HI-I6C0AAAAJ&hl=en"
+#direçao da página desejada
+
+html <- htmlTreeParse(url, useInternalNodes=T)
+# lê e analisa a sintaxe do código
+
+xpathSApply(html , "//title", xmlValue)
+# retorna o título do nó
+
+
+###########################################33
+#PEGANDO A PARTIR DO PACOTE httr
+
+library(httr) # carregando a biblioteca
+html2 = GET(url) #lendo o código html da página
+
+cont = content(html2, as = "text")
+# extrai o código como texto
+
+parsedHtml = htmlParse(cont, asText = TRUE)
+# o mesmo que htmlTreeParse
+
+xpathSApply(parsedHtml,"//title",xmlValue)
+#----------------------------------------------
+#Acessando páginas com senha
+
+#nesse caso, apenas comando GET retornará "401"
+
+pg2 = GET("http://httpbin.org/basic-auth/user/password",authenticate("user","passwd"))
+
+########################################################################################################
+# READING DATA FROM APIs
+
 
 
 
