@@ -77,4 +77,46 @@ xt <- xtabs(Freq ~ Gender + Admit, data=DF)
 
 print(object.size(data) , units = "Mb")#tamanho que ocupa na memória
 
+####=================================================================================
+#Creating new variables
+
+if(!file.exists("./data")){dir.create("./data")}
+fileurl <- "https://data.baltimorecity.gov/api/views/k5ry-ef3g/rows.csv?accessType=DOWNLOAD"
+download.file(fileurl , destfile = "./data/restaurants_2.csv")
+
+restData <- read.csv("./data/restaurants_2.csv")
+
+
+s1 <- seq(1,10 , by = 2) #criando sequencias
+s2 <- seq(1,10, length=3)
+x <- c(1,3,8,25,100)
+seq(along = x)
+
+#subsetiting variables
+
+restData$nearMe = restData$neighborhood %in% c("Roland Park","Homeland")  # note que estou praticamente criando uma nova variavel
+table(restData$nearMe)
+
+restData$zipWrong = ifelse(restData$zipCode < 0 , TRUE , FALSE )
+table(restData$zipWrong,restData$zipCode<0)
+
+
+#creating categorical variables
+
+restData$zipGroups = cut(restData$zipCode , breaks = quantile(restData$zipCode))
+table(restData$zipGroups)
+#estou quebrando/classificando a variavel zipocode pelo quantile da variável
+table(restData$zipGroups , restData$zipCode)
+
+library(Hmisc)
+restData$zipCode = cut2(restData$zipCode=4)
+table(restData$zipGroups)
+#obteno mais ou menos o mesmo que antes, mas de uma maniera mais simples
+
+
+restData$zcf <- factor(restData$zipCode)
+restData$zcf[1:10]
+
+
+
 
