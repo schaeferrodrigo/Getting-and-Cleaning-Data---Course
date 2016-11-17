@@ -28,11 +28,11 @@ download.file(fileUrl , destfile = "./data/restaurants.csv")
 ## baixando arquivo
 
 restData <- read.csv("./data/restaurants.csv")
-# guardando data na variável "restData"
+# guardando data na variÃ¡vel "restData"
 
 head( restData , n = 3)
 tail(restData , n = 3)
-# início e final do data.frame
+# inÃ­cio e final do data.frame
 
 
 summary(restData)
@@ -56,14 +56,14 @@ any(is.na(restData$councilDistrict))
 all(restData$zipCode>0)
 
 colSums(is.na(restData))
-#soma para cada coluna do data.frame o número de NA's
+#soma para cada coluna do data.frame o nÃºmero de NA's
 all(colSums(is.na(restData)) == 0)
 #verifica se sao todas 0
 
-table(restData$zipCode %in% c(21212)) # numera elementos com uma característica especifica
-table(restData$zipCode %in% c(21212,21213)) # exemplo análogo ao anterior
+table(restData$zipCode %in% c(21212)) # numera elementos com uma caracterÃ­stica especifica
+table(restData$zipCode %in% c(21212,21213)) # exemplo anÃ¡logo ao anterior
 
-restData[restData$zipCode %in% c("21212","21213"), ] #outra maneira de fazer isso, mas agora preservando as informaçoes do dataframe
+restData[restData$zipCode %in% c("21212","21213"), ] #outra maneira de fazer isso, mas agora preservando as informaÃ§oes do dataframe
 
 # TRoCANDO DE DATA SET
 data(UCBAdmissions)
@@ -75,7 +75,7 @@ xt <- xtabs(Freq ~ Gender + Admit, data=DF)
 
 
 
-print(object.size(data) , units = "Mb")#tamanho que ocupa na memória
+print(object.size(data) , units = "Mb")#tamanho que ocupa na memÃ³ria
 
 ####=================================================================================
 #Creating new variables
@@ -105,11 +105,11 @@ table(restData$zipWrong,restData$zipCode<0)
 
 restData$zipGroups = cut(restData$zipCode , breaks = quantile(restData$zipCode))
 table(restData$zipGroups)
-#estou quebrando/classificando a variavel zipocode pelo quantile da variável
+#estou quebrando/classificando a variavel zipocode pelo quantile da variÃ¡vel
 table(restData$zipGroups , restData$zipCode)
 
 library(Hmisc)
-restData$zipCode = cut2(restData$zipCode=4)
+restData$zipGroups = cut2(restData$zipCode=4)
 table(restData$zipGroups)
 #obteno mais ou menos o mesmo que antes, mas de uma maniera mais simples
 
