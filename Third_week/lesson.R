@@ -118,5 +118,41 @@ restData$zcf <- factor(restData$zipCode)
 restData$zcf[1:10]
 
 
+#####3
+#Reshapping data
+
+library(reshape2) 
+head(mtcars)
+
+mtcars$carname <-rownames(mtcars) #cria uma nova coluna com os nomes dos carros
+
+carmelt <- melt(mtcars, id = c("carname" , "gear" , "cyl"), measure.vars=c("mpg" , "hp"))
+#cria um data frame que considera mpg e depois hp de cada carro
+
+cylData <- dcast(carmelt, cyl ~ variable)
+#cria um data frame a partir do carmel condensando a variavel cyl, 
+
+dcast(carmelt, cyl ~ variable ,mean)
+#faz uma média dos valores das variáves para cada valor de cyl
+
+
+
+#outra base de dados
+
+head(InsectSprays)
+
+
+tapply(InsectSprays$count, InsectSprays$spray , sum)
+
+spIns = split(InsectSprays$count, InsectSprays$spray)
+SprCount = lapply(spIns,sum)
+unlist(SprCount)
+
+sapply(spIns,sum)
+
+library(plyr)
+ddply(InsectSprays,.(spray),summarize , sum=sum(count))
+
+ddply(InsectSprays,.(spray),summarize, sum=sum(count)) #cria uma nova variavel
 
 
