@@ -6,3 +6,4 @@ photo <-  jpeg::readJPEG("./data/photo.jpg" , native = TRUE)
 
 quantile(photo, probs = seq(0, 1,0.1))
 
+# -15259150 -10575416 
